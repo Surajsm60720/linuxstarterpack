@@ -74,9 +74,14 @@ export default function Home() {
           {/* Terminal Content */}
           <div className="p-4 font-mono text-sm h-[calc(100%-2.5rem)]" ref={contentRef}>
             <div className="text-gray-100 mt-2 welcome-text opacity-0">
-              <pre className="font-mono whitespace-pre overflow-x-auto text-center">
+              {/* ASCII art for larger screens */}
+              <pre className="hidden md:block font-mono whitespace-pre overflow-x-auto text-center justify-center text-xs sm:text-sm">
                 {asciiArt}
               </pre>
+              {/* Text title for mobile */}
+              <h1 className="md:hidden text-2xl font-bold text-center mb-4">
+                Linux Starter Pack
+              </h1>
             </div>
             <div className="mt-4 text-gray-300">
               <p className="welcome-text opacity-0">Features:</p>
