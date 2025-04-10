@@ -75,22 +75,22 @@ export default function Home() {
           <div className="p-4 font-mono text-sm h-[calc(100%-2.5rem)]" ref={contentRef}>
             <div className="text-gray-100 mt-2 welcome-text opacity-0">
               {/* ASCII art for larger screens */}
-              <pre className="hidden md:block font-mono whitespace-pre overflow-x-auto text-center justify-center text-xs sm:text-sm">
+              <pre className="hidden md:block font-mono whitespace-pre text-center text-xs sm:text-sm overflow-x-hidden">
                 {asciiArt}
               </pre>
               {/* Text title for mobile */}
-              <h1 className="md:hidden text-2xl font-bold text-center mb-4">
+              <h1 className="block md:hidden text-2xl font-bold text-center mb-4">
                 Linux Starter Pack
               </h1>
             </div>
             <div className="mt-4 text-gray-300">
-              <p className="welcome-text opacity-0">Features:</p>
-              <ul className="list-disc list-inside space-y-2 ml-4 mt-2">
-                <li className="feature-item opacity-0">Interactive TUI for Linux system management</li>
-                <li className="feature-item opacity-0">System information dashboard</li>
-                <li className="feature-item opacity-0">Package management made easy</li>
-                <li className="feature-item opacity-0">Service control interface</li>
-                <li className="feature-item opacity-0">Network configuration tools</li>
+              <p className="welcome-text opacity-0 mb-4">Features:</p>
+              <ul className="list-none md:list-disc space-y-4 md:space-y-2 ml-0 md:ml-4 mt-2">
+                <li className="feature-item opacity-0 text-center md:text-left">Interactive TUI for Linux system management</li>
+                <li className="feature-item opacity-0 text-center md:text-left">System information dashboard</li>
+                <li className="feature-item opacity-0 text-center md:text-left">Package management made easy</li>
+                <li className="feature-item opacity-0 text-center md:text-left">Service control interface</li>
+                <li className="feature-item opacity-0 text-center md:text-left">Network configuration tools</li>
               </ul>
             </div>
             

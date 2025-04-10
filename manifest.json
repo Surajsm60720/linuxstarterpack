@@ -1,0 +1,14 @@
+{
+  "name": "Linux Starter Pack",
+  "short_name": "LSP",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg"
+    }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
