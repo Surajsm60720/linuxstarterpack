@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import anime from 'animejs';
 
 export default function Home() {
@@ -8,47 +8,57 @@ export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timeline = anime.timeline({
-      easing: 'easeOutExpo'
-    });
+            // Start animations after text is set
+            const timeline = anime.timeline({
+              easing: 'easeOutExpo'
+            });
 
-    timeline
-      .add({
-        targets: terminalRef.current,
-        translateY: [-50, 0],
-        opacity: [0, 1],
-        duration: 1000
-      })
-      .add({
-        targets: '.command-line',
-        opacity: [0, 1],
-        duration: 800
-      })
-      .add({
-        targets: '.welcome-text',
-        opacity: [0, 1],
-        duration: 800
-      })
-      .add({
-        targets: '.feature-item',
-        translateX: [-20, 0],
-        opacity: [0, 1],
-        delay: anime.stagger(100),
-        duration: 800
-      })
-      .add({
-        targets: '.action-button',
-        scale: [0, 1],
-        opacity: [0, 1],
-        delay: anime.stagger(100),
-        duration: 600
-      });
-  }, []);
+            timeline
+              .add({
+                targets: terminalRef.current,
+                translateY: [-50, 0],
+                opacity: [0, 1],
+                duration: 1000
+              })
+              .add({
+                targets: '.welcome-text',
+                opacity: [0, 1],
+                duration: 800
+              })
+              .add({
+                targets: '.command-line',
+                opacity: [0, 1],
+                duration: 800
+              })
+              .add({
+                targets: '.feature-item',
+                translateX: [-20, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(100),
+                duration: 800
+              })
+              .add({
+                targets: '.action-button',
+                scale: [0, 1],
+                opacity: [0, 1],
+                delay: anime.stagger(100),
+                duration: 600
+              });
+          }, []);
+
+  const asciiArt = `
+  _      _                       _____  _                 _                ______               _    
+ | |    (_)                     /  ___|| |               | |               | ___ \\             | |   
+ | |     _  _ __   _   _ __  __  \\--. | |_   __ _  _ __ | |_   ___  _ __  | |_/ /  __ _   ___ | | __
+ | |    | || '_ \\ | | | |\\ \\/ /  \\--. \\| __| / _\` || '__|| __| / _ \\| '__| |  __/  / _\` | / __|| |/ /
+ | |____| || | | || |_| | >  <  /\\__/ /| |_ | (_| || |   | |_ |  __/| |    | |    | (_| || (__ |   < 
+ \\_____/|_||_| |_| \\__,_|/_/\\_\\ \\____/  \\__| \\__,_||_|    \\__| \\___|_|    \\_|     \\__,_| \\___||_|\\_\\
+`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black p-8">
-      <div className="max-w-4xl mx-auto" ref={terminalRef}>
-        <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl border border-gray-700">
+    <div className="min-h-screen bg-gradient-to-b from-orange-300 to-amber-200 flex items-center justify-center">
+      <div className="w-full h-[80vh] max-w-9/10 px-4" ref={terminalRef}>
+        <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl border border-gray-700 h-full">
           {/* Terminal Header */}
           <div className="bg-gray-800 px-4 py-2 flex items-center">
             <div className="flex space-x-2">
@@ -62,12 +72,11 @@ export default function Home() {
           </div>
           
           {/* Terminal Content */}
-          <div className="p-4 font-mono text-sm" ref={contentRef}>
-            <div className="text-green-400 command-line opacity-0">
-              <span className="text-blue-400">~</span> $ linux-starter-pack
-            </div>
+          <div className="p-4 font-mono text-sm h-[calc(100%-2.5rem)]" ref={contentRef}>
             <div className="text-gray-100 mt-2 welcome-text opacity-0">
-              Welcome to Linux Starter Pack! 🐧
+              <pre className="font-mono whitespace-pre overflow-x-auto text-center">
+                {asciiArt}
+              </pre>
             </div>
             <div className="mt-4 text-gray-300">
               <p className="welcome-text opacity-0">Features:</p>
