@@ -5,6 +5,7 @@ import anime from 'animejs';
 export default function Terminal() {
   const [userInput, setUserInput] = useState('');
   const [showAscii, setShowAscii] = useState(false);
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const terminalRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -58,8 +59,19 @@ export default function Terminal() {
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(e.target.value);
     setCursorPosition(e.target.selectionStart || 0);
-    if (e.target.value.toLowerCase() === 'hello.sh') {
-      setShowAscii(true);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const command = userInput.trim().toLowerCase();
+      setCommandHistory([...commandHistory, userInput]);
+      
+      if (command === 'hello.sh') {
+        setShowAscii(true);
+      }
+      
+      setUserInput('');
+      setCursorPosition(0);
     }
   };
 
@@ -73,11 +85,12 @@ export default function Terminal() {
 `;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-300 to-amber-200 flex items-center justify-center">
-      <div className="w-full h-[80vh] max-w-9/10 px-4" ref={terminalRef}>
+    <div className="min-h-screen bg-gradient-to-b from-orange-300 to-amber-200 flex items-center justify-center p-2">
+      <div className="h-[80vh] w-[80vw] px-2" ref={terminalRef}>
         <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl border border-gray-700 h-full">
+          
           {/* Terminal Header */}
-          <div className="bg-gray-800 px-4 py-2 flex items-center">
+          <div className="bg-gray-800 px-2 py-2 flex items-center">
             <div className="flex space-x-2">
               <div className="w-3 h-3 bg-red-500 rounded-full"></div>
               <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -101,6 +114,7 @@ export default function Terminal() {
                   type="text"
                   value={userInput}
                   onChange={handleInput}
+                  onKeyDown={handleKeyPress}
                   onKeyUp={(e) => setCursorPosition(e.currentTarget.selectionStart || 0)}
                   onClick={(e) => setCursorPosition(e.currentTarget.selectionStart || 0)}
                   className="bg-transparent border-none outline-none flex-1 text-gray-100 relative z-10 caret-transparent"
@@ -119,8 +133,25 @@ export default function Terminal() {
               </div>
             </div>
             <div className="p-4 font-mono text-sm h-[calc(100%-2.5rem)]" ref={contentRef}>
-               <div className="flex items-center space-x-2">
-               </div>
+              {commandHistory.map((cmd, index) => (
+                <div key={index} className={`command-line ${showAscii ? 'opacity-100' : 'opacity-0'}`}>                
+                  {cmd.toLowerCase() === 'hello.sh' && index === commandHistory.length - 1 && (
+                    <div className="mt-4 animate-fadeIn">
+                      <pre className="text-green-400 whitespace-pre-wrap text-[0.6rem] sm:text-xs md:text-sm lg:text-base overflow-x-auto">
+                        {asciiArt}
+                      </pre>
+                      <h1 className="md:hidden text-2xl font-bold text-center mb-4">
+                         Linux Starter Pack
+                      </h1>
+                      <div className="mt-4 text-gray-300 space-y-2">
+                        <p>Welcome to Linux Starter Pack!</p>
+                        <p>Your friendly companion for Linux system management.</p>
+                        <p className="text-gray-400">Press any key to clear the screen...</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
