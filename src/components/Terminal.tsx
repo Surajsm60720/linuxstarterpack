@@ -4,7 +4,6 @@ import anime from 'animejs';
 
 export default function Terminal() {
   const [userInput, setUserInput] = useState('');
-  const [showAscii, setShowAscii] = useState(false);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const terminalRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -12,8 +11,7 @@ export default function Terminal() {
   const [cursorPosition, setCursorPosition] = useState(0);
 
   useEffect(() => {
-    // Start animations after text is set
-    const timeline = anime.timeline({
+      const timeline = anime.timeline({
       easing: 'easeOutExpo'
     });
 
@@ -51,9 +49,10 @@ export default function Terminal() {
   }, []);
 
   const [text] = useTypewriter({
-    words: ['Type "hello.sh" to start...'],
+    words: ['Type "hello.sh" to start...(already changed the file permissions using chmod +x dont worry >_<)'],
+    typeSpeed: 30,
     loop: 1,
-    delaySpeed: 2000,
+    delaySpeed: 1,
   });
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,12 +62,7 @@ export default function Terminal() {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const command = userInput.trim().toLowerCase();
       setCommandHistory([...commandHistory, userInput]);
-      
-      if (command === 'hello.sh') {
-        setShowAscii(true);
-      }
       
       setUserInput('');
       setCursorPosition(0);
@@ -134,7 +128,7 @@ export default function Terminal() {
             </div>
             <div className="p-4 font-mono text-sm h-[calc(100%-2.5rem)]" ref={contentRef}>
               {commandHistory.map((cmd, index) => (
-                <div key={index} className={`command-line ${showAscii ? 'opacity-100' : 'opacity-0'}`}>                
+                <div key={index} className="command-line opacity-100">                  
                   {cmd.toLowerCase() === 'hello.sh' && index === commandHistory.length - 1 && (
                     <div className="mt-4 animate-fadeIn">
                       <pre className="text-green-400 whitespace-pre-wrap text-[0.6rem] sm:text-xs md:text-sm lg:text-base overflow-x-auto">
@@ -144,9 +138,26 @@ export default function Terminal() {
                          Linux Starter Pack
                       </h1>
                       <div className="mt-4 text-gray-300 space-y-2">
-                        <p>Welcome to Linux Starter Pack!</p>
-                        <p>Your friendly companion for Linux system management.</p>
-                        <p className="text-gray-400">Press any key to clear the screen...</p>
+                        <p>A Linux distro based package installation CLI</p>
+                        <p className="text-gray-400">Type &quot;features.sh&quot; to continue or type anything to clear the screen...</p>
+                      </div>
+                    </div>
+                  )}
+                  {cmd.toLowerCase() === 'features.sh' && index === commandHistory.length - 1 && (
+                    <div className="mt-4 animate-fadeIn">
+                      <div className="mt-4 text-gray-300 space-y-4">
+                        <h2 className="text-xl text-green-400 font-bold mb-4">Features</h2>
+                            <h3 className="text-blue-400 text-lg mb-2">Package Management</h3>
+                            <p className="text-sm">Easily install and manage packages across different Linux distributions</p>
+                            <h3 className="text-blue-400 text-lg mb-2">System Updates</h3>
+                            <p className="text-sm">Keep your system up to date with automatic update checks</p>
+                            <h3 className="text-blue-400 text-lg mb-2">System Tools</h3>
+                            <p className="text-sm">Essential system maintenance and optimization tools</p>
+                            <h3 className="text-blue-400 text-lg mb-2">Smart Search</h3>
+                            <p className="text-sm">Find packages across multiple repositories instantly</p>
+                        <div className="mt-6 text-left font-mono">
+                          <p className="text-gray-400 text-sm">Type &quot;hello.sh&quot; to go back or anything else to clear the screen...</p>
+                        </div>
                       </div>
                     </div>
                   )}
