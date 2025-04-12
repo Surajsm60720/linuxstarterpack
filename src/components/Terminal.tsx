@@ -10,6 +10,8 @@ export default function Terminal() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [cursorPosition, setCursorPosition] = useState(0);
 
+  const validCommands = ['features.sh', 'hello.sh', 'clear', 'help'];
+
   useEffect(() => {
     const timeline = anime.timeline({
       easing: "easeOutExpo",
@@ -64,10 +66,36 @@ export default function Terminal() {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      setCommandHistory([...commandHistory, userInput]);
-
-      setUserInput("");
-      setCursorPosition(0);
+      const command = userInput.trim();
+      
+      if (command) {
+        // Clear screen animation
+        if (contentRef.current) {
+          anime({
+            targets: contentRef.current,
+            opacity: [1, 0],
+            duration: 200,
+            easing: "easeOutQuad",
+            complete: () => {
+              // Only store valid commands in history
+              if (validCommands.includes(command.toLowerCase())) {
+                setCommandHistory([...commandHistory, command]);
+              } else {
+                setCommandHistory([]);
+              }
+              setUserInput("");
+              setCursorPosition(0);
+              // Fade back in
+              anime({
+                targets: contentRef.current,
+                opacity: [0, 1],
+                duration: 200,
+                easing: "easeInQuad"
+              });
+            },
+          });
+        }
+      }
     }
   };
 
@@ -100,60 +128,45 @@ export default function Terminal() {
 
           {/* Terminal Content */}
           <div className="bg-gray-900 text-gray-100 p-4 rounded-lg font-mono">
-            <div className="mt-4 animate-fadeIn text-center"> 
-              <pre className="text-green-400 whitespace-pre-wrap text-[0.6rem] sm:text-xs md:text-sm lg:text-base overflow-x-auto">
-                {asciiArt}
-              </pre>
-              <h1 className="md:hidden text-2xl font-bold text-center mb-4">
-                Linux Starter Pack
-              </h1>
-              <div className="mt-4 text-gray-300 space-y-2">
-                <p>A Linux distro based package installation CLI</p><br/>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2 mb-2 font-mono">
-              <span className="text-green-400">user@linux</span>
-              <span className="text-gray-400">:</span>
-              <span className="text-blue-400">~</span>
-              <span className="text-gray-400">$</span>
-              <div className="flex-1 flex items-center relative">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={userInput}
-                  onChange={handleInput}
-                  onKeyDown={handleKeyPress}
-                  onKeyUp={(e) =>
-                    setCursorPosition(e.currentTarget.selectionStart || 0)
-                  }
-                  onClick={(e) =>
-                    setCursorPosition(e.currentTarget.selectionStart || 0)
-                  }
-                  className="bg-transparent border-none outline-none flex-1 text-gray-100 relative z-10 caret-transparent"
-                  placeholder={text}
-                />
-                <div
-                  className="absolute top-0 left-0 text-gray-100 pointer-events-none"
-                  style={{
-                    position: "absolute",
-                    left: `${cursorPosition * 8}px`,
-                    opacity: 1,
-                  }}
-                >
-                  <span className="animate-blink">▋</span>
+            <div className="h-full" ref={contentRef}>
+              {/* Show ASCII art only when no commands have been entered */}
+              {commandHistory.length === 0 ? (
+                <div className="mt-4 animate-fadeIn text-center">
+                  <pre className="text-green-400 whitespace-pre-wrap text-[0.6rem] sm:text-xs md:text-sm lg:text-base overflow-x-auto">
+                    {asciiArt}
+                  </pre>
+                  <div className="mt-4 text-gray-300 space-y-2">
+                    <p>A Linux distro based package installation CLI</p>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div
-              className="p-4 font-mono text-sm h-[calc(100%-2.5rem)]"
-              ref={contentRef}
-            >
-              {commandHistory.map((cmd, index) => (
-                <div key={index} className="command-line opacity-100">
-                  {cmd.toLowerCase() === "features.sh" &&
-                    index === commandHistory.length - 1 && (
+              ) : (
+                // Show last command and its output only if it was a valid command
+                commandHistory.length > 0 && validCommands.includes(commandHistory[commandHistory.length - 1].toLowerCase()) ? (
+                  <div className="animate-fadeIn">
+                    <div className="flex items-center space-x-2 mb-4 font-mono">
+                      <span className="text-green-400">user@linux</span>
+                      <span className="text-gray-400">:</span>
+                      <span className="text-blue-400">~</span>
+                      <span className="text-gray-400">$ </span>
+                      <span>{commandHistory[commandHistory.length - 1]}</span>
+                    </div>
+                    
+                    {/* Command output */}
+                    {commandHistory[commandHistory.length - 1]?.toLowerCase() ===
+                      "hello.sh" && (
+                        <div className="mt-4 animate-fadeIn">
+                        <pre className="text-green-400 whitespace-pre-wrap text-[0.6rem] sm:text-xs md:text-sm lg:text-base overflow-x-auto">
+                          {asciiArt}
+                        </pre>
+                        <div className="mt-4 text-gray-300 space-y-2">
+                          <p>A Linux distro based package installation CLI</p>
+                        </div>
+                      </div>
+                    )}
+                    {commandHistory[commandHistory.length - 1]?.toLowerCase() ===
+                      "features.sh" && (
                       <div className="mt-4 animate-fadeIn">
-                        <div className="mt-4 text-gray-300 space-y-4">
+                        <div className="text-gray-300 space-y-4">
                           <h2 className="text-xl text-green-400 font-bold mb-4">
                             Features
                           </h2>
@@ -191,8 +204,54 @@ export default function Terminal() {
                         </div>
                       </div>
                     )}
+                  </div>
+                ) : (
+                  // Show empty terminal for invalid commands
+                  <div className="animate-fadeIn">
+                    <div className="flex items-center space-x-2 mb-4 font-mono">
+                      <span className="text-green-400">user@linux</span>
+                      <span className="text-gray-400">:</span>
+                      <span className="text-blue-400">~</span>
+                      <span className="text-gray-400">$ </span>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+
+            {/* Always show current command line at bottom */}
+            <div className="flex items-center space-x-2 mt-4 font-mono">
+              <span className="text-green-400">user@linux</span>
+              <span className="text-gray-400">:</span>
+              <span className="text-blue-400">~</span>
+              <span className="text-gray-400">$ </span>
+              <div className="flex-1 flex items-center relative">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={userInput}
+                  onChange={handleInput}
+                  onKeyDown={handleKeyPress}
+                  onKeyUp={(e) =>
+                    setCursorPosition(e.currentTarget.selectionStart || 0)
+                  }
+                  onClick={(e) =>
+                    setCursorPosition(e.currentTarget.selectionStart || 0)
+                  }
+                  className="bg-transparent border-none outline-none flex-1 text-gray-100 relative z-10 caret-transparent"
+                  placeholder={text}
+                />
+                <div
+                  className="absolute top-0 left-0 text-gray-100 pointer-events-none"
+                  style={{
+                    position: "absolute",
+                    left: `${cursorPosition * 8}px`,
+                    opacity: 1,
+                  }}
+                >
+                  <span className="animate-blink">▋</span>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
