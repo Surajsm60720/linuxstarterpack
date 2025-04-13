@@ -185,7 +185,7 @@ export default function Terminal() {
         </div>
       ) : (
         !isTerminalClosed ? (
-          <div className={`transition-all duration-300 ease-in-out ${isMinimized ? 'h-12 w-12 cursor-pointer bg-gray-900 rounded-lg shadow-lg hover:shadow-xl' : 'h-[80vh] w-[80vw] px-2'
+          <div className={`transition-all duration-300 ease-in-out ${isMinimized ? 'h-12 w-12 cursor-pointer bg-gray-900 rounded-lg shadow-lg hover:shadow-xl' : 'h-[85vh] w-[80vw] px-2'
             }`} ref={terminalRef}>
             {isMinimized ? (
               <div
@@ -270,38 +270,70 @@ export default function Terminal() {
                             {(commandHistory[commandHistory.length - 1]?.toLowerCase() === "features.sh" ||
                               commandHistory[commandHistory.length - 1]?.toLowerCase() === "features. sh") && (
                                 <div className="mt-4 animate-fadeIn">
-                                  <div className="text-gray-300 space-y-4">
-                                    <h2 className="text-xl text-green-400 font-bold mb-4">
+                                  {/* Apply responsive text sizes */}
+                                  <div className="text-gray-300 space-y-3 sm:space-y-4">
+                                    <h2 className="text-base sm:text-lg md:text-xl text-green-400 font-bold mb-2 sm:mb-4">
                                       Features
                                     </h2>
-                                    <h3 className="text-blue-400 text-lg mb-2">
-                                      Package Management
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      Cross-Distribution Support
                                     </h3>
-                                    <p className="text-sm">
-                                      Easily install and manage packages across different
-                                      Linux distributions
+                                    <p className="text-xs sm:text-sm">
+                                      Works seamlessly on Ubuntu, Fedora, Arch, openSUSE, and more.
                                     </p>
-                                    <h3 className="text-blue-400 text-lg mb-2">
-                                      System Updates
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      Intuitive Interface
                                     </h3>
-                                    <p className="text-sm">
-                                      Keep your system up to date with automatic update
-                                      checks
+                                    <p className="text-xs sm:text-sm">
+                                      Beautiful TUI (Terminal User Interface) for easy navigation.
                                     </p>
-                                    <h3 className="text-blue-400 text-lg mb-2">
-                                      System Tools
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      Smart Package Management
                                     </h3>
-                                    <p className="text-sm">
-                                      Essential system maintenance and optimization tools
+                                    <p className="text-xs sm:text-sm">
+                                      Automatically uses the correct package manager for your distro.
                                     </p>
-                                    <h3 className="text-blue-400 text-lg mb-2">
-                                      Smart Search
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      Pre-configured Tools
                                     </h3>
-                                    <p className="text-sm">
-                                      Find packages across multiple repositories instantly
+                                    <p className="text-xs sm:text-sm">
+                                      Common development tools, browsers, and applications ready to install.
                                     </p>
-                                    <div className="mt-6 text-left font-mono">
-                                      <p className="text-gray-400 text-sm">
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      Batch Installation
+                                    </h3>
+                                    <p className="text-xs sm:text-sm">
+                                      Install multiple packages with a single command.
+                                    </p>
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      Category-based Organization
+                                    </h3>
+                                    <p className="text-xs sm:text-sm">
+                                      Easy browsing through categorized software.
+                                    </p>
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      Safe and Transparent
+                                    </h3>
+                                    <p className="text-xs sm:text-sm">
+                                      Review installation commands before execution.
+                                    </p>
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      Fast and Efficient
+                                    </h3>
+                                    <p className="text-xs sm:text-sm">
+                                      Optimized for quick installations.
+                                    </p>
+
+                                    <div className="mt-4 sm:mt-6 text-left font-mono">
+                                      <p className="text-gray-400 text-xs sm:text-sm">
                                         Type anything to clear the screen...
                                       </p>
                                     </div>
