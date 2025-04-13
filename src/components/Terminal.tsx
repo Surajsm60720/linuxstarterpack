@@ -18,7 +18,7 @@ export default function Terminal() {
   const [isLoading, setIsLoading] = useState(true);
 
   const validCommands = ['features.sh', 'hello.sh', 'features. sh', 'hello. sh'];
-  
+
   useEffect(() => {
     const timeline = anime.timeline({
       easing: "easeOutExpo",
@@ -63,7 +63,7 @@ export default function Terminal() {
 
   const [text] = useTypewriter({
     words: [
-      'Type "features.sh" to view the feature list...(already changed the file permissions using chmod +x dont worry >_<)',
+      'Type "features.sh" to view the feature list...(already changed the file permissions using chmod +x dont worry ≧◠◡◠≦)',
     ],
     typeSpeed: 15,
     loop: 1,
@@ -78,7 +78,7 @@ export default function Terminal() {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const command = userInput.trim();
-      
+
       if (command) {
         // Clear screen animation
         if (contentRef.current) {
@@ -138,7 +138,7 @@ export default function Terminal() {
           setIsTerminalClosed(true);
           const randomImage = Images[Math.floor(Math.random() * Images.length)];
           setCurrentEasterEgg(randomImage);
-          
+
           // Add a small delay before showing the image
           setTimeout(() => {
             anime({
@@ -185,11 +185,10 @@ export default function Terminal() {
         </div>
       ) : (
         !isTerminalClosed ? (
-          <div className={`transition-all duration-300 ease-in-out ${
-            isMinimized ? 'h-12 w-12 cursor-pointer bg-gray-900 rounded-lg shadow-lg hover:shadow-xl' : 'h-[80vh] w-[80vw] px-2'
-          }`} ref={terminalRef}>
+          <div className={`transition-all duration-300 ease-in-out ${isMinimized ? 'h-12 w-12 cursor-pointer bg-gray-900 rounded-lg shadow-lg hover:shadow-xl' : 'h-[80vh] w-[80vw] px-2'
+            }`} ref={terminalRef}>
             {isMinimized ? (
-              <div 
+              <div
                 className="h-full w-full flex items-center justify-center hover:scale-110 transition-transform"
                 onClick={handleMinimizeToggle}
               >
@@ -200,12 +199,12 @@ export default function Terminal() {
                 {/* Terminal Header */}
                 <div className="bg-gray-800 px-2 py-2 flex items-center">
                   <div className="flex space-x-2">
-                    <div 
+                    <div
                       className="w-3 h-3 bg-red-500 rounded-full cursor-pointer hover:bg-red-400 transition-colors"
                       onClick={handleClose}
                     ></div>
                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <div 
+                    <div
                       className="w-3 h-3 bg-green-500 rounded-full cursor-pointer hover:bg-green-400 transition-colors"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -236,7 +235,7 @@ export default function Terminal() {
                             Linux Starter Pack
                           </h1>
                           <div className="mt-4 text-gray-300 space-y-2">
-                            <p>A Linux distro based package installation CLI</p><br/>
+                            <p>A Linux distro based package installation CLI</p><br />
                           </div>
                         </div>
                       ) : (
@@ -250,60 +249,65 @@ export default function Terminal() {
                               <span className="text-gray-400">$ </span>
                               <span>{commandHistory[commandHistory.length - 1]}</span>
                             </div>
-                            
+
                             {/* Command output */}
-                            {commandHistory[commandHistory.length - 1]?.toLowerCase() === "hello.sh" ||
-                             commandHistory[commandHistory.length - 1]?.toLowerCase() === "hello. sh"&& (
+                            {(commandHistory[commandHistory.length - 1]?.toLowerCase() === "hello.sh" ||
+                              commandHistory[commandHistory.length - 1]?.toLowerCase() === "hello. sh") && (
                                 <div className="mt-4 animate-fadeIn">
-                                <pre className="text-green-400 whitespace-pre-wrap text-[0.6rem] sm:text-xs md:text-sm lg:text-base overflow-x-auto">
-                                  {asciiArt}
-                                </pre>
-                                <div className="mt-4 text-gray-300 space-y-2">
-                                  <p>A Linux distro based package installation CLI</p>
-                                </div>
-                              </div>
-                            )}
-                            {(commandHistory[commandHistory.length - 1]?.toLowerCase() === "features.sh" ||
-                              commandHistory[commandHistory.length - 1]?.toLowerCase() === "features. sh") && (
-                              <div className="mt-4 animate-fadeIn">
-                                <div className="text-gray-300 space-y-4">
-                                  <h2 className="text-xl text-green-400 font-bold mb-4">
-                                    Features
-                                  </h2>
-                                  <h3 className="text-blue-400 text-lg mb-2">
-                                    Package Management
-                                  </h3>
-                                  <p className="text-sm">
-                                    Easily install and manage packages across different
-                                    Linux distributions
-                                  </p>
-                                  <h3 className="text-blue-400 text-lg mb-2">
-                                    System Updates
-                                  </h3>
-                                  <p className="text-sm">
-                                    Keep your system up to date with automatic update
-                                    checks
-                                  </p>
-                                  <h3 className="text-blue-400 text-lg mb-2">
-                                    System Tools
-                                  </h3>
-                                  <p className="text-sm">
-                                    Essential system maintenance and optimization tools
-                                  </p>
-                                  <h3 className="text-blue-400 text-lg mb-2">
-                                    Smart Search
-                                  </h3>
-                                  <p className="text-sm">
-                                    Find packages across multiple repositories instantly
-                                  </p>
-                                  <div className="mt-6 text-left font-mono">
-                                    <p className="text-gray-400 text-sm">
-                                      Type anything to clear the screen...
-                                    </p>
+                                  {/* Hide ASCII on small screens, show on medium and up with fractional scaling */}
+                                  <pre className="text-green-400 whitespace-pre-wrap overflow-x-auto hidden md:block text-[0.55rem] lg:text-[0.65rem] xl:text-xs 2xl:text-sm">
+                                    {asciiArt}
+                                  </pre>
+                                  {/* Show text title only on small screens (below md) */}
+                                  <h1 className="md:hidden text-2xl font-bold mb-4">
+                                    Linux Starter Pack
+                                  </h1>
+                                  <div className="mt-4 text-gray-300 space-y-2">
+                                    <p>A Linux distro based package installation CLI</p>
                                   </div>
                                 </div>
-                              </div>
-                            )}
+                              )}
+                            {(commandHistory[commandHistory.length - 1]?.toLowerCase() === "features.sh" ||
+                              commandHistory[commandHistory.length - 1]?.toLowerCase() === "features. sh") && (
+                                <div className="mt-4 animate-fadeIn">
+                                  <div className="text-gray-300 space-y-4">
+                                    <h2 className="text-xl text-green-400 font-bold mb-4">
+                                      Features
+                                    </h2>
+                                    <h3 className="text-blue-400 text-lg mb-2">
+                                      Package Management
+                                    </h3>
+                                    <p className="text-sm">
+                                      Easily install and manage packages across different
+                                      Linux distributions
+                                    </p>
+                                    <h3 className="text-blue-400 text-lg mb-2">
+                                      System Updates
+                                    </h3>
+                                    <p className="text-sm">
+                                      Keep your system up to date with automatic update
+                                      checks
+                                    </p>
+                                    <h3 className="text-blue-400 text-lg mb-2">
+                                      System Tools
+                                    </h3>
+                                    <p className="text-sm">
+                                      Essential system maintenance and optimization tools
+                                    </p>
+                                    <h3 className="text-blue-400 text-lg mb-2">
+                                      Smart Search
+                                    </h3>
+                                    <p className="text-sm">
+                                      Find packages across multiple repositories instantly
+                                    </p>
+                                    <div className="mt-6 text-left font-mono">
+                                      <p className="text-gray-400 text-sm">
+                                        Type anything to clear the screen...
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                           </div>
                         ) : (
                           // Show empty terminal for invalid commands
@@ -360,8 +364,8 @@ export default function Terminal() {
           </div>
         ) : (
           <div className="easter-egg-image opacity-0 transition-all duration-300">
-            <Image 
-              src={currentEasterEgg} 
+            <Image
+              src={currentEasterEgg}
               alt="Easter Egg"
               width={500}
               height={400}
