@@ -227,11 +227,16 @@ export default function Terminal() {
                       {/* Show ASCII art only when no commands have been entered */}
                       {commandHistory.length === 0 ? (
                         <div className="mt-4 animate-fadeIn text-center">
-                          <pre className="text-green-400 whitespace-pre-wrap text-[0.6rem] sm:text-xs md:text-sm lg:text-base overflow-x-auto">
+                          {/* Hide ASCII on small screens, show on medium and up with fractional scaling */}
+                          <pre className="text-green-400 whitespace-pre-wrap overflow-x-auto hidden md:block text-[0.55rem] lg:text-[0.65rem] xl:text-xs 2xl:text-sm">
                             {asciiArt}
                           </pre>
+                          {/* Show text title only on small screens (below md) */}
+                          <h1 className="md:hidden text-2xl font-bold text-center mb-4">
+                            Linux Starter Pack
+                          </h1>
                           <div className="mt-4 text-gray-300 space-y-2">
-                            <p>A Linux distro based package installation CLI</p>
+                            <p>A Linux distro based package installation CLI</p><br/>
                           </div>
                         </div>
                       ) : (
