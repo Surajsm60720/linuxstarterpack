@@ -17,7 +17,7 @@ export default function Terminal() {
   const [currentEasterEgg, setCurrentEasterEgg] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const validCommands = ['features.sh', 'hello.sh'];
+  const validCommands = ['features.sh', 'hello.sh', 'features. sh', 'hello. sh'];
   
   useEffect(() => {
     const timeline = anime.timeline({
@@ -252,8 +252,8 @@ export default function Terminal() {
                             </div>
                             
                             {/* Command output */}
-                            {commandHistory[commandHistory.length - 1]?.toLowerCase() ===
-                              "hello.sh" && (
+                            {commandHistory[commandHistory.length - 1]?.toLowerCase() === "hello.sh" ||
+                             commandHistory[commandHistory.length - 1]?.toLowerCase() === "hello. sh"&& (
                                 <div className="mt-4 animate-fadeIn">
                                 <pre className="text-green-400 whitespace-pre-wrap text-[0.6rem] sm:text-xs md:text-sm lg:text-base overflow-x-auto">
                                   {asciiArt}
@@ -263,8 +263,8 @@ export default function Terminal() {
                                 </div>
                               </div>
                             )}
-                            {commandHistory[commandHistory.length - 1]?.toLowerCase() ===
-                              "features.sh" && (
+                            {(commandHistory[commandHistory.length - 1]?.toLowerCase() === "features.sh" ||
+                              commandHistory[commandHistory.length - 1]?.toLowerCase() === "features. sh") && (
                               <div className="mt-4 animate-fadeIn">
                                 <div className="text-gray-300 space-y-4">
                                   <h2 className="text-xl text-green-400 font-bold mb-4">
@@ -345,7 +345,7 @@ export default function Terminal() {
                           className="absolute top-0 left-0 text-gray-100 pointer-events-none"
                           style={{
                             position: "absolute",
-                            left: `${cursorPosition * 8}px`,
+                            left: `${cursorPosition * 10}px`,
                             opacity: 1,
                           }}
                         >
