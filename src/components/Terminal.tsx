@@ -17,7 +17,7 @@ export default function Terminal() {
   const [currentEasterEgg, setCurrentEasterEgg] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const validCommands = ['features.sh', 'hello.sh', 'features. sh', 'hello. sh'];
+  const validCommands = ['features.sh', 'hello.sh', 'features. sh', 'hello. sh', 'contribute.sh', 'contribute. sh'];
 
   useEffect(() => {
     const timeline = anime.timeline({
@@ -63,7 +63,7 @@ export default function Terminal() {
 
   const [text] = useTypewriter({
     words: [
-      'Type "features.sh" to view the feature list...(already changed the file permissions using chmod +x dont worry ≧◠◡◠≦)',
+      'Type "features.sh" to view the feature list...Type "contribute.sh" to view the Github link',
     ],
     typeSpeed: 15,
     loop: 1,
@@ -340,6 +340,61 @@ export default function Terminal() {
                                   </div>
                                 </div>
                               )}
+                            {(commandHistory[commandHistory.length - 1]?.toLowerCase() === "contribute.sh" ||
+                              commandHistory[commandHistory.length - 1]?.toLowerCase() === "contribute. sh") && (
+                                <div className="mt-4 animate-fadeIn">
+                                  <div className="text-gray-300 space-y-3 sm:space-y-4">
+                                    <h2 className="text-base sm:text-lg md:text-xl text-green-400 font-bold mb-2 sm:mb-4">
+                                      Contributing
+                                    </h2>
+
+                                    <p className="text-xs sm:text-sm">
+                                      Thank you for your interest in contributing to Linux Starter Pack!
+                                    </p>
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      GitHub Repository
+                                    </h3>
+                                    <p className="text-xs sm:text-sm">
+                                      Find the source code, report issues, or submit pull requests on GitHub:
+                                      <a
+                                        href="https://github.com/surajsm60720/linux-starter-pack"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-yellow-400 hover:text-yellow-300 underline ml-2"
+                                      >
+                                        surajsm60720/linux-starter-pack
+                                      </a>
+                                    </p>
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      How to Contribute
+                                    </h3>
+                                    <p className="text-xs sm:text-sm">
+                                      1. Fork the repository.
+                                      <br />
+                                      2. Create a new branch for your feature or bug fix.
+                                      <br />
+                                      3. Make your changes.
+                                      <br />
+                                      4. Submit a pull request with a clear description.
+                                    </p>
+
+                                    <h3 className="text-sm md:text-lg text-blue-400 mb-1 sm:mb-2">
+                                      Ideas Welcome!
+                                    </h3>
+                                    <p className="text-xs sm:text-sm">
+                                      Feel free to open an issue to suggest new features or improvements.
+                                    </p>
+
+                                    <div className="mt-4 sm:mt-6 text-left font-mono">
+                                      <p className="text-gray-400 text-xs sm:text-sm">
+                                        Type anything to clear the screen...
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                           </div>
                         ) : (
                           // Show empty terminal for invalid commands
@@ -403,24 +458,7 @@ export default function Terminal() {
               height={400}
               priority
               unoptimized
-              className="max-w-md rounded-lg shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300"
-              onClick={() => {
-                anime({
-                  targets: '.easter-egg-image',
-                  opacity: [1, 0],
-                  scale: [1, 0.8],
-                  duration: 300,
-                  easing: 'easeInExpo',
-                  complete: () => {
-                    setIsTerminalClosed(false);
-                    setCurrentEasterEgg('');
-                    if (terminalRef.current) {
-                      terminalRef.current.style.opacity = '1';
-                      terminalRef.current.style.transform = 'scale(1) translateY(0)';
-                    }
-                  }
-                });
-              }}
+              className="max-w-md rounded-lg shadow-2xl hover:scale-105 transition-transform duration-300"
             />
           </div>
         )
